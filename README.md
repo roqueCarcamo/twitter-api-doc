@@ -7,17 +7,23 @@ Sistema de avisos, donde los usuarios podrán publicar su contenido en un muro p
 
 # Instalador 
 Clonar el repositorio : 
-git clone https://github.com/roqueCarcamo/twitter.git
+git clone https://github.com/roqueCarcamo/twitter-api-doc.git
 
 # Instalar las dependencias
 npm install
  
 # Depencias
-* "body-parser": "^1.18.2",
-* "express": "^4.16.2",
-* "morgan": "^1.9.0",
-* "winston": "^2.4.0"
+* "body-parser": "^1.18.2"
+* "cors": "^2.8.4"
+* "dotenv": "^4.0.0"
+* "express": "^4.16.2"
 * "mongoose": "^5.0.1"
+* "morgan": "^1.9.0"
+* "winston": "^2.4.0"
+
+# Depencias Desarrollo
+* "apidoc": "^0.17.6"
+* "nodemon": "^1.11.0"
 
 # Correr el proyecto
 node index.js 
