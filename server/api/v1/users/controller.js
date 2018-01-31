@@ -96,7 +96,7 @@ exports.find = (req, res, next, id) => {
  *          "__v": 0
  *      },
  *
- * @apiError Document Not Found the id of the Book was not found.
+ * @apiError Document Not Found the id of the Users was not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
@@ -174,7 +174,7 @@ exports.create = (req, res, next) => {
  *          "__v": 0
  *      },
  *
- * @apiError Document Not Found the id of the Book was not found.
+ * @apiError Document Not Found the id of the Users was not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
