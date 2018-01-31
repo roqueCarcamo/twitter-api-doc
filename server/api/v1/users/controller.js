@@ -11,33 +11,28 @@ const Model = require('./model');
  *
  * @apiParam {String} id Users unique ID.
  *
- * @apiSuccess {String} _id         unique ID of the Users.
+ * @apiSuccess {Boolean} status     Status of Users.
+ * @apiSuccess {String} _id         Unique ID of the Users.
  * @apiSuccess {String} firstname   Firstname.
- * @apiSuccess {String} listname    Lastname.
+ * @apiSuccess {String} lastname    Lastname.
  * @apiSuccess {String} email       Email.
- * @apiSuccess {String} createdAt   Created date of the users.
- * @apiSuccess {String} updateAt    Last update date of the users.
+ * @apiSuccess {String} createdAt   Created date of the Users.
+ * @apiSuccess {String} updateAt    Last update date of the Users.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *     {
- *          "_id": "5a63985872e840361145d634",
- *          "title": "Go girl",
- *          "description": "Originally writed by Gillian Flynn",
- *          "author": {
- *              "_id": "5a63929672e840361145d633",
- *              "firstname": "Gustavo",
- *              "lastname": "Morales",
- *              "createdAt": "2018-01-20T19:03:50.638Z",
- *              "updatedAt": "2018-01-20T19:03:50.638Z",
- *              "__v": 0
- *          },
- *          "createdAt": "2018-01-20T19:28:24.046Z",
- *          "updatedAt": "2018-01-20T19:28:24.046Z",
- *          "__v": 0
- *      },
+ * {
+ *	"status": true,
+ *	"_id": "5a6438a34b40da33202342b7",
+ *	"firstname": "Luis",
+ *	"lastname": "Mesa",
+ *	"email": "mesaLuis@gmail.com",
+ *	"createdAt": "2018-01-21T06:52:19.612Z",
+ *	"updatedAt": "2018-01-21T06:52:19.612Z",
+ *	"__v": 0
+ * }
  *
- * @apiError Document Not Found the id of the Book was not found.
+ * @apiError Document Not Found the id of the Users was not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
@@ -64,13 +59,13 @@ exports.find = (req, res, next, id) => {
 
 
 /**
- * @api {get} /users/:id Request Users information
- * @apiName GetUsers
+ * @api {get} /users Request Users information
+ * @apiName  AllUsers
  * @apiGroup Users
  *
- * @apiParam {String} id Users unique ID.
- *
- * @apiSuccess {String} _id         unique ID of the Users.
+ * @apiSuccess users : Key Jsons
+ * @apiSuccess {Boolean} status     Status of Users.
+ * @apiSuccess {String} _id         Unique ID of the Users.
  * @apiSuccess {String} firstname   Firstname.
  * @apiSuccess {String} listname    Lastname.
  * @apiSuccess {String} email       Email.
@@ -79,22 +74,21 @@ exports.find = (req, res, next, id) => {
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *     {
- *          "_id": "5a63985872e840361145d634",
- *          "title": "Go girl",
- *          "description": "Originally writed by Gillian Flynn",
- *          "author": {
- *              "_id": "5a63929672e840361145d633",
- *              "firstname": "Gustavo",
- *              "lastname": "Morales",
- *              "createdAt": "2018-01-20T19:03:50.638Z",
- *              "updatedAt": "2018-01-20T19:03:50.638Z",
- *              "__v": 0
- *          },
- *          "createdAt": "2018-01-20T19:28:24.046Z",
- *          "updatedAt": "2018-01-20T19:28:24.046Z",
- *          "__v": 0
- *      },
+ * {
+ *	"users": [{
+ *		"status": true,
+ *		"_id": "5a641a7fe8bcb529ac475562",
+ *		"firstname": "Pedro",
+ *		"lastname": "Luis",
+ *		"email": "carcamomesa@gmail.com",
+ *		"createdAt": "2018-01-21T04:43:43.634Z",
+ *		"updatedAt": "2018-01-21T04:43:43.634Z",
+ *		"__v": 0
+ *	}],
+ *	"limit": 10,
+ *	"skip": 0
+ * }
+ * 
  *
  * @apiError Document Not Found the id of the Users was not found.
  *
@@ -125,6 +119,51 @@ exports.all = (req, res, next) => {
         });
 };
 
+ /**
+ * @api {post} /users Request Users information
+ * @apiName  PostUsers
+ * @apiGroup Users
+ * 
+ * @apiParam {String} firstname Firstname.
+ * @apiParam {String} lastname  Lastname.
+ * @apiParam {String} email     Email.
+ * 
+ *
+ * @apiSuccess message : message
+ * @apiSuccess content : Key Jsons
+ * @apiSuccess {Boolean} status     Status of Users.
+ * @apiSuccess {String} _id         Unique ID of the Users.
+ * @apiSuccess {String} firstname   Firstname.
+ * @apiSuccess {String} listname    Lastname.
+ * @apiSuccess {String} email       Email.
+ * @apiSuccess {String} createdAt   Created date of the users.
+ * @apiSuccess {String} updateAt    Last update date of the users.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *{
+ *	"message": "Successfully created user",
+ *	"content": {
+ *		"status": true,
+ *		"_id": "5a6438a34b40da33202342b7",
+ *		"firstname": "Luis",
+ *		"lastname": "Mesa",
+ *		"email": "mesaLuis@gmail.com",
+ *		"createdAt": "2018-01-21T06:52:19.612Z",
+ *		"updatedAt": "2018-01-21T06:52:19.612Z",
+ *		"__v": 0
+ *	}
+ *}
+ * 
+ *
+ * @apiError Document Not Found the id of the Users was not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "Document Not Found"
+ *     }
+ */
 exports.create = (req, res, next) => {
     logger.info(req.body);
     const body = req.body;
@@ -143,36 +182,31 @@ exports.create = (req, res, next) => {
 
 /**
  * @api {get} /users/:id Request Users information
- * @apiName GetUsers
+ * @apiName IdUsers
  * @apiGroup Users
  *
  * @apiParam {String} id Users unique ID.
  *
- * @apiSuccess {String} _id         unique ID of the Users.
+ * @apiSuccess {Boolean} status     Status of Users.
+ * @apiSuccess {String} _id         Unique ID of the Users.
  * @apiSuccess {String} firstname   Firstname.
- * @apiSuccess {String} listname    Lastname.
+ * @apiSuccess {String} lastname    Lastname.
  * @apiSuccess {String} email       Email.
- * @apiSuccess {String} createdAt   Created date of the users.
- * @apiSuccess {String} updateAt    Last update date of the users.
+ * @apiSuccess {String} createdAt   Created date of the Users.
+ * @apiSuccess {String} updateAt    Last update date of the Users.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *     {
- *          "_id": "5a63985872e840361145d634",
- *          "title": "Go girl",
- *          "description": "Originally writed by Gillian Flynn",
- *          "author": {
- *              "_id": "5a63929672e840361145d633",
- *              "firstname": "Gustavo",
- *              "lastname": "Morales",
- *              "createdAt": "2018-01-20T19:03:50.638Z",
- *              "updatedAt": "2018-01-20T19:03:50.638Z",
- *              "__v": 0
- *          },
- *          "createdAt": "2018-01-20T19:28:24.046Z",
- *          "updatedAt": "2018-01-20T19:28:24.046Z",
- *          "__v": 0
- *      },
+ * {
+ *	"status": true,
+ *	"_id": "5a6438a34b40da33202342b7",
+ *	"firstname": "Luis",
+ *	"lastname": "Mesa",
+ *	"email": "mesaLuis@gmail.com",
+ *	"createdAt": "2018-01-21T06:52:19.612Z",
+ *	"updatedAt": "2018-01-21T06:52:19.612Z",
+ *	"__v": 0
+ * }
  *
  * @apiError Document Not Found the id of the Users was not found.
  *
@@ -187,13 +221,20 @@ exports.get = (req, res, next) => {
 };
 
 /**
- * @api {get} /users/:id Request Users information
- * @apiName GetUsers
+ * @api {put} /users/:id Request Users information
+ * @apiName  PutUsers
  * @apiGroup Users
+ * 
+ * @apiParam {String} id Unique ID of the Users.
+ * @apiParam {String} firstname Firstname.
+ * @apiParam {String} lastname  Lastname.
+ * @apiParam {String} email     Email.
+ * 
  *
- * @apiParam {String} id Users unique ID.
- *
- * @apiSuccess {String} _id         unique ID of the Users.
+ * @apiSuccess message : message
+ * @apiSuccess content : Key Jsons
+ * @apiSuccess {Boolean} status     Status of Users.
+ * @apiSuccess {String} _id         Unique ID of the Users.
  * @apiSuccess {String} firstname   Firstname.
  * @apiSuccess {String} listname    Lastname.
  * @apiSuccess {String} email       Email.
@@ -202,24 +243,22 @@ exports.get = (req, res, next) => {
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *     {
- *          "_id": "5a63985872e840361145d634",
- *          "title": "Go girl",
- *          "description": "Originally writed by Gillian Flynn",
- *          "author": {
- *              "_id": "5a63929672e840361145d633",
- *              "firstname": "Gustavo",
- *              "lastname": "Morales",
- *              "createdAt": "2018-01-20T19:03:50.638Z",
- *              "updatedAt": "2018-01-20T19:03:50.638Z",
- *              "__v": 0
- *          },
- *          "createdAt": "2018-01-20T19:28:24.046Z",
- *          "updatedAt": "2018-01-20T19:28:24.046Z",
- *          "__v": 0
- *      },
+ *{
+ *	"message": "Successfully modified user",
+ *	"content": {
+ *		"status": false,
+ *		"_id": "5a6438a34b40da33202342b7",
+ *		"firstname": "Marcos",
+ *		"lastname": "Robles",
+ *		"email": "roblesMarcos@gmail.com",
+ *		"createdAt": "2018-01-21T06:52:19.612Z",
+ *		"updatedAt": "2018-01-21T06:55:49.749Z",
+ *		"__v": 0
+ *	}
+ *}
+ * 
  *
- * @apiError Document Not Found the id of the Book was not found.
+ * @apiError Document Not Found the id of the Users was not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
@@ -244,13 +283,17 @@ exports.update = (req, res, next) => {
 };
 
 /**
- * @api {get} /users/:id Request Users information
- * @apiName GetUsers
+ * @api {delete} /users/:id Request Users information
+ * @apiName  DeleteUsers
  * @apiGroup Users
- *
+ * 
  * @apiParam {String} id Users unique ID.
+ * 
  *
- * @apiSuccess {String} _id         unique ID of the Users.
+ * @apiSuccess message : message
+ * @apiSuccess users : Key Jsons
+ * @apiSuccess {Boolean} status     Status of Users.
+ * @apiSuccess {String} _id         Unique ID of the Users.
  * @apiSuccess {String} firstname   Firstname.
  * @apiSuccess {String} listname    Lastname.
  * @apiSuccess {String} email       Email.
@@ -259,24 +302,22 @@ exports.update = (req, res, next) => {
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *     {
- *          "_id": "5a63985872e840361145d634",
- *          "title": "Go girl",
- *          "description": "Originally writed by Gillian Flynn",
- *          "author": {
- *              "_id": "5a63929672e840361145d633",
- *              "firstname": "Gustavo",
- *              "lastname": "Morales",
- *              "createdAt": "2018-01-20T19:03:50.638Z",
- *              "updatedAt": "2018-01-20T19:03:50.638Z",
- *              "__v": 0
- *          },
- *          "createdAt": "2018-01-20T19:28:24.046Z",
- *          "updatedAt": "2018-01-20T19:28:24.046Z",
- *          "__v": 0
- *      },
+ *{
+ *	"message": "User successfully disabled",
+ *	"content": {
+ *		"status": false,
+ *		"_id": "5a6438a34b40da33202342b7",
+ *		"firstname": "Luis",
+ *		"lastname": "Mesa",
+ *		"email": "mesaLuis@gmail.com",
+ *		"createdAt": "2018-01-21T06:52:19.612Z",
+ *		"updatedAt": "2018-01-21T06:54:05.502Z",
+ *		"__v": 0
+ *	}
+ *}
+ * 
  *
- * @apiError Document Not Found the id of the Book was not found.
+ * @apiError Document Not Found the id of the Users was not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found

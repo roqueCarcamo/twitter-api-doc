@@ -11,10 +11,10 @@ const Model = require('./model');
  *
  * @apiParam {String} id Tweets unique ID.
  *
- * @apiSuccess {String} _id         unique ID of the Tweets.
+ * @apiSuccess {String} _id         Unique ID of the Tweets.
  * @apiSuccess {String} content     Content.
  * @apiSuccess {String} location    Location.
- * @apiSuccess {String} author      Author.
+ * @apiSuccess {String} author      Unique ID of the Author.
  * @apiSuccess {String} createdAt   Created date of the users.
  * @apiSuccess {String} updateAt    Last update date of the users.
  *
@@ -28,7 +28,7 @@ const Model = require('./model');
  *	"createdAt": "2018-01-21T07:02:25.133Z",
  *	"updatedAt": "2018-01-21T07:02:25.133Z",
  *	"__v": 0
- *},
+ *}
  *
  * @apiError Document Not Found the id of the Tweets was not found.
  *
@@ -56,30 +56,44 @@ exports.find = (req, res, next, id) => {
 };
 
 /**
- * @api {get} /tweets/:id Request Tweets information
- * @apiName GetTweets
+ * @api {get} /tweets/ Request Tweets information
+ * @apiName AllTweets
  * @apiGroup Tweets
  *
- * @apiParam {String} id Tweets unique ID.
- *
+ * @apiSuccess twests : Key Jsons
  * @apiSuccess {String} _id         unique ID of the Tweets.
  * @apiSuccess {String} content     Content.
+ * @apiSuccess {String} author      Unique ID of the Author.
  * @apiSuccess {String} location    Location.
- * @apiSuccess {String} author      Author.
  * @apiSuccess {String} createdAt   Created date of the users.
  * @apiSuccess {String} updateAt    Last update date of the users.
+ * @apiSuccess {String} limit       Limit of records.
+ * @apiSuccess {String} skip        Skip of records.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *{
- *	"_id": "5a643b01cbd91d2618e310b2",
- *	"content": "Nuevo anuncio 1",
- *	"author": "5a641a7fe8bcb529ac475562",
- *	"location": "Barranquilla",
- *	"createdAt": "2018-01-21T07:02:25.133Z",
- *	"updatedAt": "2018-01-21T07:02:25.133Z",
- *	"__v": 0
- *},
+ * {
+ *	"twests": [{
+ *		"_id": "5a642ffe0d8fb91fcc3357c2",
+ *		"content": "Nuevo anuncio 2",
+ *		"author": {
+ *			"status": true,
+ *			"_id": "5a641a7fe8bcb529ac475562",
+ *			"firstname": "Pedro",
+ *			"lastname": "Luis",
+ *			"email": "carcamomesa@gmail.com",
+ *			"createdAt": "2018-01-21T04:43:43.634Z",
+ *			"updatedAt": "2018-01-21T04:43:43.634Z",
+ *			"__v": 0
+ *		},
+ *		"location": "Barranquilla",
+ *		"createdAt": "2018-01-21T06:15:26.468Z",
+ *		"updatedAt": "2018-01-21T06:15:26.468Z",
+ *		"__v": 0
+ *	}],
+ *	"limit": 10,
+ *	"skip": 0
+ *}
  *
  * @apiError Document Not Found the id of the Tweets was not found.
  *
@@ -114,12 +128,16 @@ exports.all = (req, res, next) => {
 };
 
 /**
- * @api {get} /tweets/:id Request Tweets information
- * @apiName GetTweets
+ * @api {post} /tweets Request Tweets information
+ * @apiName PostTweets
  * @apiGroup Tweets
  *
- * @apiParam {String} id Tweets unique ID.
+ * @apiParam {String}   content Content.
+ * @apiParam {ObjectId} author Id of the Author.
+ * @apiParam {String}   location Location.
  *
+ * @apiSuccess message : message
+ * @apiSuccess content : Key Jsons
  * @apiSuccess {String} _id         unique ID of the Tweets.
  * @apiSuccess {String} content     Content.
  * @apiSuccess {String} location    Location.
@@ -130,14 +148,17 @@ exports.all = (req, res, next) => {
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
  *{
- *	"_id": "5a643b01cbd91d2618e310b2",
- *	"content": "Nuevo anuncio 1",
- *	"author": "5a641a7fe8bcb529ac475562",
- *	"location": "Barranquilla",
- *	"createdAt": "2018-01-21T07:02:25.133Z",
- *	"updatedAt": "2018-01-21T07:02:25.133Z",
- *	"__v": 0
- *},
+ *	"message": "Successfully created tweet",
+ *	"content": {
+ *		"_id": "5a643b01cbd91d2618e310b2",
+ * 		"content": "Nuevo anuncio 1",
+ * 		"author": "5a641a7fe8bcb529ac475562",
+ * 		"location": "Barranquilla",
+ * 		"createdAt": "2018-01-21T07:02:25.133Z",
+ * 		"updatedAt": "2018-01-21T07:02:25.133Z",
+ *		"__v": 0
+ *	}
+ *}
  *
  * @apiError Document Not Found the id of the Tweets was not found.
  *
@@ -165,15 +186,15 @@ exports.create = (req, res, next) => {
 
 /**
  * @api {get} /tweets/:id Request Tweets information
- * @apiName GetTweets
+ * @apiName IdTweets
  * @apiGroup Tweets
  *
  * @apiParam {String} id Tweets unique ID.
  *
- * @apiSuccess {String} _id         unique ID of the Tweets.
+ * @apiSuccess {String} _id         Unique ID of the Tweets.
  * @apiSuccess {String} content     Content.
  * @apiSuccess {String} location    Location.
- * @apiSuccess {String} author      Author.
+ * @apiSuccess {String} author      Unique ID of the Author.
  * @apiSuccess {String} createdAt   Created date of the users.
  * @apiSuccess {String} updateAt    Last update date of the users.
  *
@@ -187,7 +208,7 @@ exports.create = (req, res, next) => {
  *	"createdAt": "2018-01-21T07:02:25.133Z",
  *	"updatedAt": "2018-01-21T07:02:25.133Z",
  *	"__v": 0
- *},
+ *}
  *
  * @apiError Document Not Found the id of the Tweets was not found.
  *
@@ -203,12 +224,17 @@ exports.get = (req, res, next) => {
 };
 
 /**
- * @api {get} /tweets/:id Request Tweets information
- * @apiName GetTweets
+ * @api {put} /tweets/:Id Request Tweets information
+ * @apiName PutTweets
  * @apiGroup Tweets
  *
- * @apiParam {String} id Tweets unique ID.
+ * @apiParam {String}   id Unique ID of the Tweets.
+ * @apiParam {String}   content Content.
+ * @apiParam {ObjectId} author Id of the Author.
+ * @apiParam {String}   location Location.
  *
+ * @apiSuccess message : message
+ * @apiSuccess content : Key Jsons
  * @apiSuccess {String} _id         unique ID of the Tweets.
  * @apiSuccess {String} content     Content.
  * @apiSuccess {String} location    Location.
@@ -219,14 +245,17 @@ exports.get = (req, res, next) => {
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
  *{
- *	"_id": "5a643b01cbd91d2618e310b2",
- *	"content": "Nuevo anuncio 1",
- *	"author": "5a641a7fe8bcb529ac475562",
- *	"location": "Barranquilla",
- *	"createdAt": "2018-01-21T07:02:25.133Z",
- *	"updatedAt": "2018-01-21T07:02:25.133Z",
- *	"__v": 0
- *},
+ *	"message": "Successfully modified tweet",
+ *	"content": {
+ *		"_id": "5a643b01cbd91d2618e310b2",
+ *		"content": "Anuncion modificado",
+ *		"author": "5a641a7fe8bcb529ac475562",
+ *		"location": "Sincelejo",
+ *		"createdAt": "2018-01-21T07:02:25.133Z",
+ *		"updatedAt": "2018-01-21T07:05:04.054Z",
+ *		"__v": 0
+ *	}
+ *}
  *
  * @apiError Document Not Found the id of the Tweets was not found.
  *
@@ -254,8 +283,8 @@ exports.update = (req, res, next) => {
 };
 
 /**
- * @api {get} /tweets/:id Request Tweets information
- * @apiName GetTweets
+ * @api {delete} /tweets/:id Request Tweets information
+ * @apiName DeleteTweets
  * @apiGroup Tweets
  *
  * @apiParam {String} id Tweets unique ID.
@@ -270,14 +299,17 @@ exports.update = (req, res, next) => {
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
  *{
- *	"_id": "5a643b01cbd91d2618e310b2",
- *	"content": "Nuevo anuncio 1",
- *	"author": "5a641a7fe8bcb529ac475562",
- *	"location": "Barranquilla",
- *	"createdAt": "2018-01-21T07:02:25.133Z",
- *	"updatedAt": "2018-01-21T07:02:25.133Z",
- *	"__v": 0
- *},
+ *	"message": "Successfully deleted tweet",
+ *	"content": {
+ *		"_id": "5a643b01cbd91d2618e310b2",
+ *		"content": "Anuncion modificado",
+ *		"author": "5a641a7fe8bcb529ac475562",
+ *		"location": "Sincelejo",
+ *		"createdAt": "2018-01-21T07:02:25.133Z",
+ *		"updatedAt": "2018-01-21T07:05:04.054Z",
+ *		"__v": 0
+ *	}
+ *}
  *
  * @apiError Document Not Found the id of the Tweets was not found.
  *
