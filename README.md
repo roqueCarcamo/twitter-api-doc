@@ -25,7 +25,10 @@ npm install
 * "apidoc": "^0.17.6"
 * "nodemon": "^1.11.0"
 
+# Configuraciones
 * Cambiar valores de configuración en el archivo .env
+* Crear carpeta llamada public para la documentación del api.
+* Ejecutar comando npm run apidoc
 
 
 # Correr el proyecto
