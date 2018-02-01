@@ -25,6 +25,9 @@ npm install
 * "apidoc": "^0.17.6"
 * "nodemon": "^1.11.0"
 
+* Cambiar valores de configuración en el archivo .env
+
+
 # Correr el proyecto
 node index.js 
 
